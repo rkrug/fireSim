@@ -1,0 +1,7 @@
+.git
+^.*\\.org$
+^fireSim.
+.gitignore
+library
+version
+postTangleScript.sh

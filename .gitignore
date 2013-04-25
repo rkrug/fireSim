@@ -1,0 +1,10 @@
+.#*
+#*
+*#
+*~
+*#fireSim.*
+fireSim.*
+!fireSim.org*
+*.o
+*.so
+*.rds

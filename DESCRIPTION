@@ -1,0 +1,12 @@
+Package: fireSim
+Type: Package
+Title: Fire simulations using different routines
+Version: 0.0-1
+Date: 2013-04-25_13-12
+Author: Rainer M. Krug
+Maintainer: Rainer M Krug <Rainer@krugs.de>
+Description: Collection of different seed fire routines.
+License: GPL-3
+LazyLoad: yes
+Depends: spgrass6, RSQLite
+LinkingTo: Rcpp
