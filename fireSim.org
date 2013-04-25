@@ -123,6 +123,7 @@ Org-babel support for building
   *#fireSim.*
   fireSim.*
   !fireSim.org*
+  fireSim.org~
   *.o
   *.so
   *.rds

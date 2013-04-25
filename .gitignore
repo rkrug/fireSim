@@ -5,6 +5,7 @@
 *#fireSim.*
 fireSim.*
 !fireSim.org*
+fireSim.org~
 *.o
 *.so
 *.rds
