@@ -2,11 +2,16 @@ Package: fireSim
 Type: Package
 Title: Fire simulations using different routines
 Version: 0.0-1
-Date: 2013-06-27_12-11
+Date: 2013-09-12_12-50
 Author: Rainer M. Krug
 Maintainer: Rainer M Krug <Rainer@krugs.de>
 Description: Collection of different seed fire routines.
 License: GPL-3
 LazyLoad: yes
-Depends: spgrass6, RSQLite
-LinkingTo: Rcpp  
+Depends:
+    spgrass6,
+    RSQLite
+LinkingTo: Rcpp
+Collate:
+    'fireBlockBurnGRASS.R'
+    'seedDisp-package.R'

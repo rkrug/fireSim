@@ -1,7 +1,7 @@
 # -*- org-babel-tangled-file: t; org-babel-tangle-run-postTangleScript: t; -*-
 
 #+TITLE:     fireSim.org
-#+AUTHOR:    Rainer M Krig
+#+AUTHOR:    Rainer M Krug
 #+EMAIL:     Rainer@krugs.de
 #+DESCRIPTION: R Package Development Helpers
 #+KEYWORDS: 
@@ -89,21 +89,23 @@ Org-babel support for building
 
 ** Post tangle script
 #+begin_src sh :results output :tangle ./postTangleScript.sh :var VER=(vc-working-revision (buffer-file-name)) :var STATE=(vc-state (or (buffer-file-name) org-current-export-file))
-  sed -i '' s/MAJORVERSION/$MAJORVERSION/ ./DESCRIPTION
-  sed -i '' s/MINORVERSION/$MINORVERSION/ ./DESCRIPTION
-  sed -i '' s/PATCHVERSION/$PATCHVERSION/ ./DESCRIPTION
-  sed -i '' s/TODAYSDATE/`date +%Y-%m-%d_%H-%M`/ ./DESCRIPTION
+sed -i '' s/MAJORVERSION/$MAJORVERSION/ ./DESCRIPTION
+sed -i '' s/MINORVERSION/$MINORVERSION/ ./DESCRIPTION
+sed -i '' s/PATCHVERSION/$PATCHVERSION/ ./DESCRIPTION
+sed -i '' s/TODAYSDATE/`date +%Y-%m-%d_%H-%M`/ ./DESCRIPTION
 
-  sed -i '' s/MAJORVERSION/$MAJORVERSION/ ./fireSim-package.R
-  sed -i '' s/MINORVERSION/$MINORVERSION/ ./fireSim-package.R
-  sed -i '' s/PATCHVERSION/$PATCHVERSION/ ./fireSim-package.R
-  sed -i '' s/TODAYSDATE/`date +%Y-%m-%d_%H-%M`/ ./fireSim-package.R
+sed -i '' s/MAJORVERSION/$MAJORVERSION/ ./fireSim-package.R
+sed -i '' s/MINORVERSION/$MINORVERSION/ ./fireSim-package.R
+sed -i '' s/PATCHVERSION/$PATCHVERSION/ ./fireSim-package.R
+sed -i '' s/TODAYSDATE/`date +%Y-%m-%d_%H-%M`/ ./fireSim-package.R
 
-  Rscript -e "library(roxygen2);roxygenize('pkg', roxygen.dir='pkg', copy.package=FALSE, unlink.target=FALSE)"
-  rm -f ./postTangleScript.sh
+Rscript -e "library(roxygen2);roxygenize('.', copy.package=FALSE, unlink.target=FALSE)"
+rm -f ./postTangleScript.sh
 #+end_src
 
 #+results:
+: Updating collate directive in  /Users/rainerkrug/Documents/Projects/R-Packages/fireSim/DESCRIPTION 
+: Updating namespace directives
 
 
 * gitignore file (./.gitignore)
@@ -115,17 +117,17 @@ Org-babel support for building
 :padline: no
 :END: 
 #+begin_src gitignore
-  .#*
-  #*
-  *#
-  *~
-  *#fireSim.*
-  fireSim.*
-  !fireSim.org*
-  fireSim.org~
-  *.o
-  *.so
-  *.rds
+.#*
+#*
+,*#
+,*~
+,*#fireSim.*
+fireSim.*
+!fireSim.org*
+fireSim.org~
+,*.o
+,*.so
+,*.rds                                                                                                                                                                                                                                                                                                                                                                                                     
 #+end_src
 
 * Git Revision info
@@ -139,12 +141,32 @@ Complete version info
 #+end_src
 
 #+RESULTS:
-: Version     :  .4-13
-: Commit date :  2013-03-20 18:33:21 +0100
-: git HASH    :  906d085c35b4b835082e4583c4134c5ddf7f1555
-: git status  : 
-: # On branch master
-: nothing to commit, working directory clean
+#+begin_example
+Version     :  0.0-1
+Commit date :  2013-06-27 14:23:54 +0200
+git HASH    :  a010ae604586dc03c491c5d05b530fd77a029c28
+git status  : 
+# On branch master
+# Changes not staged for commit:
+#   (use "git add <file>..." to update what will be committed)
+#   (use "git checkout -- <file>..." to discard changes in working directory)
+#
+#	modified:   .Rbuildignore
+#	modified:   .gitignore
+#	modified:   DESCRIPTION
+#	modified:   NAMESPACE
+#	modified:   R/fireBlockBurn.R
+#	modified:   fireSim-package.R
+#	modified:   fireSim.org
+#
+# Untracked files:
+#   (use "git add <file>..." to include in what will be committed)
+#
+#	R/seedDisp-package.R
+#	README
+#	man/
+no changes added to commit (use "git add" and/or "git commit -a")
+#+end_example
 
 
 
@@ -157,34 +179,16 @@ Complete version info
 :padline: no
 :END: 
 #+begin_src fundamental
-  .git
-  ^.*\\.org$
-  ^fireSim.
-  .gitignore
-  library
-  version
-  postTangleScript.sh
+.git  
+^.*\\.org$
+^fireSim.
+.gitignore
+library
+version
+postTangleScript.sh
 #+end_src
 
 
-
-* Package description
-#+begin_src R :eval nil :tangle ./fireSim-package.R :shebang :padline no :no-expand :comments no
-  ##' Simulate fire using different approaches
-  ##' 
-  ##' \tabular{ll}{
-  ##' Package: \tab fireSim\cr
-  ##' Type: \tab Package\cr
-  ##' Version: \tab MAJORVERSION.MINORVERSION.PATCHVERSION\cr
-  ##' Date: \tab TODAYSDATE\cr
-  ##' License: \tab GPL (>= 2)\cr
-  ##' LazyLoad: \tab yes\cr
-  ##' }
-  ##'
-  ##' @docType package
-  ##' @author Rainer M Krug \email{Rainer@@krugs.de}
-  NULL
-#+end_src
 
 * Package Files
 ** DESCRIPTION
@@ -223,63 +227,161 @@ LinkingTo: Rcpp
 
 #+results:
 
+** Package description (./R/seedDisp-package.R)
+:PROPERTIES:
+:tangle:   ./R/seedDisp-package.R
+:eval: nil
+:no-expand: TRUE
+:comments: no
+:END:
+#+begin_src R 
+##' Simulate fire using different approaches
+##'
+##' This package is a collection of different fire routines to simulate fire spread
+##'
+##' 
+##' ##' \tabular{ll}{
+##' Package: \tab fireSim\cr
+##' Type: \tab Package\cr
+##' Version: \tab  MAJORVERSION.MINORVERSION.PATCHVERSION\cr
+##' Date: \tab TODAYSDATE\cr
+##' License: \tab GPL (>= 2)\cr
+##' LazyLoad: \tab yes\cr
+##' }
+##'
+##' @name fireSim-package
+##' @alias fireSim-package
+##' @docType package
+##' @author Rainer M Krug \email{Rainer@@krugs.de}
+NULL
+#+end_src
+
 
 * R directory (./R)
-
-
 ** Block fires
-*** fireBlockBurn (./R/fireBlockBurn.R)
+*** fireBlockBurn (./R/fireBlockBurnGRASS.R)
 :PROPERTIES:
-:tangle:   ./R/fireBlockBurn.R
+:tangle:   ./R/fireBlockBurnGRASS.R
 :no-expand: TRUE
 :comments: yes
 :END:
 Block burn design. Fire breaks limit the fires to the blocks and burning is managed.
 #+begin_src R 
-  ##' Fire procedure for block burning
-  ##'
-  ##' This function adjusts the attributre table of the vector layer #fireBlocksLayerName# and adds the following columns:
-  ##' 1) burnsThisYear: containing boolean values indicating if block burns this year (will be overwritten at next call of fireBlockBurn)
-  ##' 2) burns.YEAR: YEAR is replaced by the argument year. containing boolean value indicating if fire occurs in the year YEAR. Will be overwritten at enxt call of fireBlockBurn *if argument year is identical*
-  ##' 3) countFires: creates column if it does not exist and increases by one in blocks which burn
-  ##' 4) lastFire: creates if does not exist and sets to year in blocks which do burn
-  ##' 
-  ##' Uses the data in the vector layer fireBlocksName and the function doesBlockBurnFunction(fireTable) to determine which blocks burn
-  ##' @title 
-  ##' @param pathToGrassDB path to the grass db (*must be sqlite*) containing the attribute table of the layer)
-  ##' @param fireBlocksLayerName name of the vector layer
-  ##' @param doesBlockBurnFunction function determining if a certain block burns, taking the "fires" table as input
-  ##' @param rasterFireOutputLayer name of the to be created raster layer indicating cells which burned (==1) and which did not burn (==NULL)
-  ##' @param year year of evaluation 
-  ##' @return invisible returns the table "fires"
-  ##' @author Rainer M Krug
-  fireBlockBurn <- function( pathToGrassDB,
-                            fireBlocksLayerName = "fire_blocks",
-                            doesBlockBurnFunction,
-                            rasterFireOutputLayer,
-                            year
-                            ) {
+##' Fire function for block burning
+##'
+##' This function simulates block burning, i.e. the burning of whole
+##' blocks. The blocks are defined by the polygons in the vector \code{input}
+##' layer and this function simly identifies blocks which are burning and
+##' adjusts the attributes table of \code{input} (see below for details)
+##' accordingly and returns a \code{output} raster layer containing \code{1}
+##' for cell burned and \code{NULL} for not burned.
+##' 
+##' The adjustments of the attributre table of the vector layer \code{input}
+##' are as follow:
+##' 
+##' \enumerate{
+##' 
+##' \item \bold{\code{burns}}: This \code{logical} column is added if it does
+##' not exist yet or owerwritten. It contains \code{logical} values indicating
+##' if the corresponding block burns. The values will be overwritten each time
+##' the function is called.
+##' 
+##' \item \bold{\code{burns.YEAR}}: This \code{logical} column will be added
+##' if it does not exist or overwritten. YEAR is replaced by the argument
+##' \code{year}.  The values are identical to the column \code{burns} but will
+##' not be overwritten if the function is called with a different \code{year}
+##' argument. Will be overwritten if the function is called with the same
+##' \code{year} argument.
+##' 
+##' \item \bold{\code{countFires}}: This \code{integer} column is added if it
+##' does not exist or it will be updated. It contains \code{integer} values
+##' indicating the number of times this block has burned. It will be updated
+##' each time the function is called.
+##' 
+##' \item \bold{\code{lastFire}}: This \code{integer} column is added if it
+##' does not exist or it will be updated. It contains the \code{year} when the
+##' last time the block has burned. If it has not burned yet, the value is
+##' \code{NA}. It will be updated each time the function is run.
+##' 
+##' }
+##' 
+##' To determine if a block burns, an \R function is passed as the argument
+##' \code{doesBlockBurnFunction}. This function has to have the following
+##' form:
+##'
+##' \code{doesBlockBurnFunction <- function(fires)\{...\}}
+##'
+##' where
+##'
+##' \code{fires}
+##' 
+##' is a \code{data.frame} containing the attribute table of the \code{input}
+##' layer. This \code{fires} \code{data.frame} has the columns as mentioned
+##' above, although they might not contain any values if the function
+##' \code{firesBlockBurn} has not been called yet.
+##' 
+##' The function has to return a \code{logical} vector of the same length as
+##' the number of rows in the \code{fires} dataframe.
+##'
+##' An example would be:
+##'
+##' \code{doesBlockBurn = function(fires) \{ return(as.logical(rbinom(n=nrow(fires), size=1, 0.5))) \}}
+##' 
+##' This function \bold{does not} respects MASK in GRASS.
+##'  
+##' 
+##' @usage fireBlockBurnGRASS(input, output, pathToGrassDB, year, doesBlockBurnFunction)
+##' @name fireBlockBurnGRASS
+##' @title Block burn
+##' 
+##' @param input name of the vector layer containing the polygons outlining
+##' the blocks
+##' @param output name of the output raster layer indicating cells which
+##' burned (==1) and which did not burn (==NULL)
+##' @param pathToGrassDB path to the \bold{sqlite} grass db containing the
+##' attribute table of the layer
+##' @param year year of evaluation
+##' @param doesBlockBurnFunction \R function determining if a certain block
+##' burns, taking the "fires" table in the as input
+##' 
+##' @return invisible returns the updated attribute table of \code{input} as
+##' \code{data.frame}
+##' @author Rainer M Krug <Rainer@@krugs.de>
+##'
+##' @export
+fireBlockBurnGRASS <- function(
+    input,
+    output,
+    pathToGrassDB,
+    year,
+    doesBlockBurnFunction
+    ) {
     ## Connect to grass sqlite db
     m <- dbDriver("SQLite")
     con <- dbConnect(m, pathToGrassDB)
     ## load fire_blocks table
-    fires <- dbReadTable(con, fireBlocksLayerName)
+    fires <- dbReadTable(con, input)
+    ## add column burns if it does not exist
+    if (!("burns" %in% names(fires))) {
+        fires$burns <- FALSE
+    }
+    ## add column countFires if it does not exist
+    if (!("countFires" %in% names(fires))) {
+        fires$countFires <- 0
+    }
+    ## add column lastFire if it does not exist
+    if (!("lastFire" %in% names(fires))) {
+        fires$lastFire <- NA
+    }
     ## determine which blocks burn
     burn <- doesBlockBurnFunction(fires)
-    ## add column burnsThisYear
+    ## update column burnsThisYear
     fires$burnsThisYear <- burn
     ## add column burns%YEAR
     fires[paste("burns", year, sep=".")] <- burn
     ## increase countFires for these
-    if (is.null(fires$countFires)) {
-      fires$countFires <- as.integer(burn)
-    } else {
-      fires$countFires <- fires$countFires + as.integer(burn)
-    }
-    ## set lastFire to this year
-    if (is.null(fires$lastFire)) {
-      fires$lastFire <- NA
-    }
+    fires$countFires <- fires$countFires + as.integer(burn)
+     ## update lastFire to this year
     fires$lastFire[burn] <- as.integer(year)
     ## write table back
     dbWriteTable(con, "fire_blocks", fires, overwrite=TRUE)
@@ -287,215 +389,57 @@ Block burn design. Fire breaks limit the fires to the blocks and burning is mana
     dbDisconnect(con)
     ## create fireLayerName(year) fire raster layer
     execGRASS(
-      "v.to.rast",
-      input = fireBlocksLayerName,
-      output = rasterFireOutputLayer,
-      use = "attr",
-      attrcolumn = "burnsThisYear",
-      flags = c("overwrite")
-      )
+        "v.to.rast",
+        input = input,
+        output = output,
+        use = "attr",
+        attrcolumn = "burnsThisYear",
+        flags = c("overwrite")
+        )
     ## set "no fire in cell" to null()
     execGRASS(
-      "r.mapcalc",
-      expression = paste(
-        rasterFireOutputLayer, 
-        " = ",
-        "if(", rasterFireOutputLayer, ", 1, null())"
-        ),
-      flags = "overwrite"
-      )
+        "r.mapcalc",
+        expression = paste(
+            output, 
+            " = ",
+            "if(", output, ", 1, null())"
+            ),
+        flags = "overwrite"
+        )
     invisible(fires)
-  }
+}
 #+end_src
 
 
 * src directory (./src)
 
 * TODO Tests
-Write test functions
 * TODO Vignette
-Write vignette
+* TODO Examples
 * package management                                               :noexport:
-** check package
+** build package
 #+begin_src sh :results output
-  CWD=`pwd`
-  R CMD check pkg | sed 's/^*/ */'
+R CMD bUild ./
+#+End_src
+
+
+** check package
+#+begin_src sh :results output 
+  R CMD check fireSim_0.0-1.tar.gz
 #+end_src
-
-#+results:
-#+begin_example
- * using log directory ‘/home/rkrug/Documents/Projects/R-Packages/seeddisp/pkg.Rcheck’
- * using R version 2.13.2 (2011-09-30)
- * using platform: i686-pc-linux-gnu (32-bit)
- * using session charset: UTF-8
- * checking for file ‘DESCRIPTION’ ... OK
- * checking extension type ... Package
- * this is package ‘fireSim’ version ‘0.0-13’
- * checking package namespace information ... OK
- * checking package dependencies ... OK
- * checking if this is a source package ... WARNING
-Subdirectory ‘fireSim/src’ contains object files.
- * checking for executable files ... OK
- * checking whether package ‘fireSim’ can be installed ... OK
- * checking installed package size ... OK
- * checking package directory ... OK
- * checking for portable file names ... OK
- * checking for sufficient/correct file permissions ... OK
- * checking DESCRIPTION meta-information ... OK
- * checking top-level files ... OK
- * checking index information ... OK
- * checking package subdirectories ... WARNING
-Subdirectory 'inst' contains no files.
- * checking R files for non-ASCII characters ... OK
- * checking R files for syntax errors ... OK
- * checking whether the package can be loaded ... OK
- * checking whether the package can be loaded with stated dependencies ... OK
- * checking whether the package can be unloaded cleanly ... OK
- * checking whether the namespace can be loaded with stated dependencies ... OK
- * checking whether the namespace can be unloaded cleanly ... OK
- * checking for unstated dependencies in R code ... OK
- * checking S3 generic/method consistency ... OK
- * checking replacement functions ... OK
- * checking foreign function calls ... OK
- * checking R code for possible problems ... OK
- * checking Rd files ... OK
- * checking Rd metadata ... OK
- * checking Rd cross-references ... OK
- * checking for missing documentation entries ... WARNING
-Undocumented code objects:
-  waterDisp
-All user-level objects in a package should have documentation entries.
-See the chapter 'Writing R documentation files' in the 'Writing R
-Extensions' manual.
- * checking for code/documentation mismatches ... WARNING
-Codoc mismatches from documentation object 'birdDispGRASS':
-birdDispGRASS
-  Code: function(input, output = "birdDispSeeds", zeroToNULL = TRUE,
-                 overwrite = FALSE)
-  Docs: function(input, output, overwrite)
-  Argument names in code not in docs:
-    zeroToNULL
-  Mismatches in argument names:
-    Position: 3 Code: zeroToNULL Docs: overwrite
-  Mismatches in argument default values:
-    Name: 'output' Code: "birdDispSeeds" Docs: 
-    Name: 'overwrite' Code: FALSE Docs: 
-
-Codoc mismatches from documentation object 'localDispGRASS':
-localDispGRASS
-  Code: function(input, output = "localDispSeeds", zeroToNULL = TRUE,
-                 overwrite = FALSE)
-  Docs: function(input, output, overwrite)
-  Argument names in code not in docs:
-    zeroToNULL
-  Mismatches in argument names:
-    Position: 3 Code: zeroToNULL Docs: overwrite
-  Mismatches in argument default values:
-    Name: 'output' Code: "localDispSeeds" Docs: 
-    Name: 'overwrite' Code: FALSE Docs: 
-
-Codoc mismatches from documentation object 'waterDispGRASS':
-waterDispGRASS
-  Code: function(input, output = "waterDispSeeds", slope = "slope",
-                 flowdir = "flowdir", depRates, overwrite = FALSE,
-                 zeroToNULL = TRUE, progress = TRUE)
-  Docs: function(input, output = "waterDispSeeds", slope = "SLOPE",
-                 flowdir = "FLOWDIR", overwrite = FALSE)
-  Argument names in code not in docs:
-    depRates zeroToNULL progress
-  Mismatches in argument names:
-    Position: 5 Code: depRates Docs: overwrite
-  Mismatches in argument default values:
-    Name: 'slope' Code: "slope" Docs: "SLOPE"
-    Name: 'flowdir' Code: "flowdir" Docs: "FLOWDIR"
-
-Codoc mismatches from documentation object 'windDisp':
-windDisp
-  Code: function(SD2D, SEEDS, MASK, zeroToNULL)
-  Docs: function(SD2D, SEEDS, MASK)
-  Argument names in code not in docs:
-    zeroToNULL
-
-Codoc mismatches from documentation object 'windDispGRASS':
-windDisp
-  Code: function(SD2D, SEEDS, MASK, zeroToNULL)
-  Docs: function(SD2D, input, output = "windDispSeeds", overwrite =
-                 FALSE)
-  Argument names in code not in docs:
-    SEEDS MASK zeroToNULL
-  Argument names in docs not in code:
-    input output overwrite
-  Mismatches in argument names:
-    Position: 2 Code: SEEDS Docs: input
-    Position: 3 Code: MASK Docs: output
-    Position: 4 Code: zeroToNULL Docs: overwrite
-
- * checking Rd \usage sections ... WARNING
-Documented arguments not in \usage in documentation object 'waterDispGRASS':
-  depRates
-
-Objects in \usage without \alias in documentation object 'windDispGRASS':
-  windDisp
-
-Functions with \usage entries need to have the appropriate \alias
-entries, and all their arguments documented.
-The \usage entries must correspond to syntactically valid R code.
-See the chapter 'Writing R documentation files' in the 'Writing R
-Extensions' manual.
- * checking Rd contents ... OK
- * checking for unstated dependencies in examples ... OK
- * checking line endings in C/C++/Fortran sources/headers ... OK
- * checking line endings in Makefiles ... OK
- * checking for portable compilation flags in Makevars ... OK
- * checking for portable use of $(BLAS_LIBS) and $(LAPACK_LIBS) ... OK
- * checking examples ... NONE
- * checking PDF version of manual ... OK
-WARNING: There were 5 warnings, see
-  ‘/home/rkrug/Documents/Projects/R-Packages/seeddisp/pkg.Rcheck/00check.log’
-for details
-#+end_example
-
 
 
 ** INSTALL package
-
 #+begin_src sh :results output :var rckopts="--library=./Rlib"
   R CMD INSTALL $rckopts pkg
 #+end_src
 
-#+results:
-: g++ -I/usr/share/R/include   -I"/home/rkrug/R/i486-pc-linux-gnu-library/2.13/Rcpp/include"   -fpic  -O3 -pipe  -g -c windDispCpp.cpp -o windDispCpp.o
-: g++ -shared -o fireSim.so windDispCpp.o -L/home/rkrug/R/i486-pc-linux-gnu-library/2.13/Rcpp/lib -lRcpp -Wl,-rpath,/home/rkrug/R/i486-pc-linux-gnu-library/2.13/Rcpp/lib -L/usr/lib/R/lib -lR
-
-
-** build package
-
-#+begin_src sh :results output
-  R CMD build ./
-#+end_src
-
-#+results:
-
-
-
 ** load library
-
 #+begin_src R :session :results output :var libname=(file-name-directory buffer-file-name)
 ## customize the next line as needed: 
 .libPaths(new = file.path(getwd(),"Rlib") )
 require( basename(libname), character.only=TRUE)
 #+end_src
-
-#+results:
-
-- this loads the library into an R session
-- customize or delete the =.libPaths= line as desired 
-
-
-: #+begin_src R :session :var libname=(file-name-directory buffer-file-name)
-: .libPaths(new = file.path(getwd(),"Rlib") )
-: require( basename(libname), character.only=TRUE)
-: #+end_src
 
 ** grep require( 
 
@@ -507,43 +451,8 @@ require( basename(libname), character.only=TRUE)
 grep 'require(' R/*
 #+end_src
 
-: #+begin_src sh :results output
-: grep 'require(' R/*
-: #+end_src
+#+RESULTS:
 
-** set up .Rbuildignore and man, R, and Rlib directories
-
-- This document sits in the top level source directory. So, ignore it
-  and its offspring when checking, installing and building.
-- List all files to ignore under =#+results: rbi=  (including this
-  one!). Regular expressions are allowed.
-- Rlib is optional. If you want to INSTALL in the system directory,
-  you own't need it.
-
-: #+results: rbi
-#+results: rbi
-: Rpackage.*
-: PATCHVERSION
-: MAJORVERSION
-: MINORVERSION
-
-Only need to run this once (unless you add more ignorable files).
-
-#+begin_src R :results output silent :var rbld=rbi 
-dir.create("./fireSim")
-cat(rbld,'\n', file="./.Rbuildignore")
-dir.create("./man")
-dir.create("./R")
-dir.create("./src")
-dir.create("./Rlib")
-#+end_src
-
-: #+begin_src R :results output silent :var rbld=rbi 
-: cat(rbld,'\n', file=".Rbuildignore")
-: dir.create("man")
-: dir.create("R")
-: dir.create("../Rlib")
-: #+end_src
 
 * Package structure and src languages                              :noexport:
 
