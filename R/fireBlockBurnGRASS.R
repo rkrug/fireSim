@@ -62,7 +62,7 @@
 ##' This function \bold{does not} respects MASK in GRASS.
 ##'  
 ##' 
-##' @usage fireBlockBurnGRASS(input, output, pathToGrassDB, year, doesBlockBurnFunction)
+##' @usage fireBlockBurnGRASS(input, output, pathToGrassDB, year, doesBlockBurnFunction, overwrite = FALSE)
 ##' @name fireBlockBurnGRASS
 ##' @title Block burn
 ##' 
@@ -75,6 +75,8 @@
 ##' @param year year of evaluation
 ##' @param doesBlockBurnFunction \R function determining if a certain block
 ##' burns, taking the "fires" table in the as input
+##'
+##' @param overwrite if TRUE, the \code{output} layer will be overwritten if it exists 
 ##' 
 ##' @return invisible returns the updated attribute table of \code{input} as
 ##' \code{data.frame}
@@ -86,8 +88,12 @@ fireBlockBurnGRASS <- function(
     output,
     pathToGrassDB,
     year,
-    doesBlockBurnFunction
+    doesBlockBurnFunction,
+    overwrite = FALSE
     ) {
+    if ( length( execGRASS("g.mlist", type="rast", pattern=output, intern=TRUE) ) & !overwrite ) {
+        stop(paste("Layer", output, "exists! Please specify 'overwrite=TRUE' or use different output name!"))
+    } 
     ## Connect to grass sqlite db
     m <- dbDriver("SQLite")
     con <- dbConnect(m, pathToGrassDB)

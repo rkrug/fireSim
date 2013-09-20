@@ -3,7 +3,7 @@
 \title{Block burn}
 \usage{
   fireBlockBurnGRASS(input, output, pathToGrassDB, year,
-    doesBlockBurnFunction)
+    doesBlockBurnFunction, overwrite = FALSE)
 }
 \arguments{
   \item{input}{name of the vector layer containing the
@@ -20,6 +20,9 @@
   \item{doesBlockBurnFunction}{\R function determining if a
   certain block burns, taking the "fires" table in the as
   input}
+
+  \item{overwrite}{if TRUE, the \code{output} layer will be
+  overwritten if it exists}
 }
 \value{
   invisible returns the updated attribute table of
