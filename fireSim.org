@@ -66,8 +66,8 @@ Org-babel support for building
 #+PROPERTY: comments yes
 #+PROPERTY: padline no
 #+PROPERTY: var MAJORVERSION=0
-#+PROPERTY: var+ MINORVERSION=0
-#+PROPERTY: var+ PATCHVERSION=1
+#+PROPERTY: var+ MINORVERSION=1
+#+PROPERTY: var+ PATCHVERSION=0
 #+PROPERTY: var+ GITHASH="testhash" 
 #+PROPERTY: var+ GITCOMMITDATE="testdate"
 :END:
@@ -94,9 +94,9 @@ sed -i '' s/MINORVERSION/$MINORVERSION/ ./DESCRIPTION
 sed -i '' s/PATCHVERSION/$PATCHVERSION/ ./DESCRIPTION
 sed -i '' s/TODAYSDATE/`date +%Y-%m-%d_%H-%M`/ ./DESCRIPTION
 
-sed -i '' s/MAJORVERSION/$MAJORVERSION/ ./fireSim-package.R
-sed -i '' s/MINORVERSION/$MINORVERSION/ ./fireSim-package.R
-sed -i '' s/PATCHVERSION/$PATCHVERSION/ ./fireSim-package.R
+sed -i '' s/MAJORVERSION/$MAJORVERSION/ ./R/package.R
+sed -i '' s/MINORVERSION/$MINORVERSION/ ./R/package.R
+sed -i '' s/PATCHVERSION/$PATCHVERSION/ ./R/package.R
 sed -i '' s/TODAYSDATE/`date +%Y-%m-%d_%H-%M`/ ./fireSim-package.R
 
 Rscript -e "library(roxygen2);roxygenize('.', copy.package=FALSE, unlink.target=FALSE)"
@@ -104,6 +104,7 @@ rm -f ./postTangleScript.sh
 #+end_src
 
 #+results:
+: Writing fireSim-package.Rd
 
 
 * gitignore file (./.gitignore)
@@ -207,7 +208,7 @@ Maintainer: Rainer M Krug <Rainer@krugs.de>
 Description: Collection of different seed fire routines.
 License: GPL-3
 LazyLoad: yes
-Depends: spgrass6, RSQLite
+Imports: spgrass6, DBI, RSQLite
 LinkingTo: Rcpp  
 #+end_src
 
@@ -238,7 +239,7 @@ LinkingTo: Rcpp
 ##' This package is a collection of different fire routines to simulate fire spread
 ##'
 ##' 
-##' ##' \tabular{ll}{
+##' \tabular{ll}{
 ##' Package: \tab fireSim\cr
 ##' Type: \tab Package\cr
 ##' Version: \tab  MAJORVERSION.MINORVERSION.PATCHVERSION\cr
@@ -248,13 +249,14 @@ LinkingTo: Rcpp
 ##' }
 ##'
 ##' @name fireSim-package
-##' @alias fireSim-package
 ##' @docType package
 ##' @author Rainer M Krug \email{Rainer@@krugs.de}
+##' @import spgrass6
+##' @import RSQLite
+##' @import DBI
 NULL
 #+end_src
 
-t
 * R directory (./R)
 ** Block fires
 *** fireBlockBurn (./R/fireBlockBurnGRASS.R)

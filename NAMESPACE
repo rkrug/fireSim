@@ -1,1 +1,4 @@
 export(fireBlockBurnGRASS)
+import(DBI)
+import(RSQLite)
+import(spgrass6)
