@@ -97,7 +97,7 @@ sed -i '' s/TODAYSDATE/`date +%Y-%m-%d_%H-%M`/ ./DESCRIPTION
 sed -i '' s/MAJORVERSION/$MAJORVERSION/ ./R/package.R
 sed -i '' s/MINORVERSION/$MINORVERSION/ ./R/package.R
 sed -i '' s/PATCHVERSION/$PATCHVERSION/ ./R/package.R
-sed -i '' s/TODAYSDATE/`date +%Y-%m-%d_%H-%M`/ ./fireSim-package.R
+sed -i '' s/TODAYSDATE/`date +%Y-%m-%d_%H-%M`/ ./R/package.R
 
 Rscript -e "library(roxygen2);roxygenize('.', copy.package=FALSE, unlink.target=FALSE)"
 rm -f ./postTangleScript.sh
